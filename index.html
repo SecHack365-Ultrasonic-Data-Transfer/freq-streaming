@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="style.css">
+
 <canvas></canvas>
 
 <script>
@@ -9,25 +11,33 @@
         input = audioCtx.createMediaStreamSource(stream);
         analyzer = audioCtx.createAnalyser();
         input.connect(analyzer);
+        return Promise.resolve(0);
     }
 
     init().then(() => {
-        console.log(audioCtx, '\n', stream, '\n', input, '\n', analyzer);
+        // input = audioCtx.createMediaStreamSource(stream);
+        // analyzer = audioCtx.createAnalyser();
+        // input.connect(analyzer);
+
+        // console.log(audioCtx, '\n', stream, '\n', input, '\n', analyzer);
         // return;
 
-        const frequencyArray = new Float32Array(analyzer.frequencyBinCount);
+        frequencyArray = new Float32Array(analyzer.frequencyBinCount);
+        analyzer.getFloatFrequencyData(frequencyArray);
+        console.log(frequencyArray);
+        return;
 
         const tick = () => {
-            requestAnimationFrame(tick);
+            // requestAnimationFrame(tick);
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#222';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
+            // ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // ctx.strokeStyle = '#222';
+            // ctx.lineWidth = 2;
+            // ctx.beginPath();
 
-            analyzer.getFloatFrequencyData(frequencyArray);
+            // analyzer.getFloatFrequencyData(frequencyArray);
             console.log(frequencyArray);
-            // return;
+            return;
 
             frequencyArray.forEach((freq, index) => {
                 let x = canvas.width / frequencyArray.length * index;
